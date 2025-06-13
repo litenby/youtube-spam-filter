@@ -1,4 +1,5 @@
-# youtube-livechat-spam-filter
-A program for automatically filtering unwanted spam from a Youtube live stream chat. 
+# Youtube Live Chat Spam Filter
 
-The program runs as a .NET Console application in Windows. A configuration file allows the user to specify their channel id and what to filter from the live stream chat. 
+A program that runs in Windows and filters spam messages from a Youtube live stream chat. 
+
+

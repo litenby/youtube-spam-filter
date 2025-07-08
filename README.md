@@ -70,3 +70,5 @@ Program Setup:
 Run the Program:  
 --------------------------------------------------------------------------------  
 Double-click YoutubeSpamFilter.exe to start monitoring and filtering live chat.   
+
+![Screenshot of the program removing spam](images/screenshot1.png)

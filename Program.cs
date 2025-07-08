@@ -92,7 +92,7 @@ namespace SpamFilterNamespace
 
         void Timer1_Tick(object state)
         {
-            _ = HandleGetMsgAsync(); // fire-and-forget
+            _ = HandleGetMsgAsync();
         }
 
         async Task HandleGetMsgAsync()
@@ -151,12 +151,12 @@ namespace SpamFilterNamespace
             Console.WriteLine("sendmsg function");
             if (startUpMsgHoldBack == 0)
             {
-                Console.WriteLine("SENT " + myMessage);
+                Console.WriteLine("Sent message: " + myMessage);
                 UserCredential credential;
 
                 
                 string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "client_secrets.json");
-                Console.WriteLine("Looking for file at: " + path);
+                //Console.WriteLine("Looking for file at: " + path);
                 using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
                     credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
@@ -188,7 +188,7 @@ namespace SpamFilterNamespace
             }
             else
             {
-                Console.WriteLine("HELD BACK " + myMessage);
+                Console.WriteLine("Message delayed until program warm-up complete. " + myMessage);
             }
         }
 
@@ -198,7 +198,7 @@ namespace SpamFilterNamespace
             UserCredential credential;
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "client_secrets.json");
-            Console.WriteLine("Looking for file at: " + path);
+            //Console.WriteLine("Looking for file at: " + path);
             using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
@@ -246,22 +246,22 @@ namespace SpamFilterNamespace
                     recentMsgIndex = (recentMsgIndex + 1) % recentMessages.Length;
 
                     if (checkSpam(displayMessage))
-                        await deleteMsg(messageId, displayMessage, 3);
+                        await deleteMsg(messageId, displayMessage);
                 }
             }
         }
 
 
 
-        public async Task deleteMsg(String mGetRidOf, String mBody, int channelNum)
+        public async Task deleteMsg(String mGetRidOf, String mBody)
         {
             messagesDeletedCounter++;
-            Console.WriteLine($"{DateTime.Now}  '{mBody}' deleted from channel {channelNum}. {messagesDeletedCounter} spam messages deleted.");
+            Console.WriteLine($"{DateTime.Now}  '{mBody}' deleted from channel. {messagesDeletedCounter} spam messages deleted.");
 
             UserCredential credential;
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "client_secrets.json");
-            Console.WriteLine("Looking for file at: " + path);
+            //Console.WriteLine("Looking for file at: " + path);
             using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(

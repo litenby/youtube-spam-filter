@@ -1,6 +1,18 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+﻿# Ignore sensitive config files
+appsettings.json
+client_secrets.json
+*.tokenstore/
+tokenstore/
+AppConfig.cs 
 
+# Ignore build output
+bin/
+obj/
+
+# Visual Studio files
+*.user
+*.suo
+*.userprefs
+.vscode/
 /.vs
 /obj

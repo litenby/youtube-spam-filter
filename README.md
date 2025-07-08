@@ -1,4 +1,4 @@
-﻿#YouTube Live Chat Spam Filter - Setup & Usage Guide  
+﻿# YouTube Live Chat Spam Filter - Setup & Usage Guide  
   
 A Windows-based tool that monitors YouTube Live Chat and automatically removes   
 spam messages. It can also respond to simple chat commands.  

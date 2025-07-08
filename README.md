@@ -15,18 +15,41 @@ Quick Start<br>
 Setup Instructions<br>
 1. Google OAuth2 Credentials<br>
 <br>
-1a. Log in to google with the user that will be the bot. It should be a user that has moderator or owner access to the channel since these can send messages more frequently. <br>
-1b. In google search for Youtube API Console Click the link called Youtube Data API Overview - Google Developers On the left click Get Auth Credentials. Where it says "Open the Credentials page" click that Click Create to create a project Accept the terms of service Name the project anything and then click create. Click Create credentials Select OAuth client ID Click configure consent screen Enter a product name, can be anything Leave other boxes blank Click Save at the bottom Under Create OAuth client ID select "Other" Type a name in the name box such as "My Client" On the next screen where it says OAuth client, click OK. Under OAuth 2.0 client IDs, click the download arrow on the far right side Download the file In Windows Explorer rename the long name of client_secret_345342432362-kjkklkewjfqlkf to simply client_secret.json Under API & Services Click Dashboard Click Enable APIS and Services Search for YouTube Data API v3 and click on it Click the blue Enable box. If you have multiple google ID's it's important to keep an eye on the upper right to make sure it doesn't switch to another one while doing these steps<br>
+- Log in to google with the user that will be the bot. It should be a user that has moderator or owner access to the channel since these can send messages more frequently. <br>
+- In google search for Youtube API Console <br>
+- Click the link called Youtube Data API Overview - Google Developers <br>
+- On the left click Get Auth Credentials.<br>
+- Click the link that says "Open the Credentials page"<br>
+- Click "Create to create a project"<br>
+- Accept the terms of service <br>
+- Name the project anything and then click create. <br>
+- Click Create credentials <br>
+- Select OAuth client ID <br>
+- Click configure consent screen <br>
+- nter a product name, can be anything <br>
+- Leave other boxes blank <br>
+- Click Save at the bottom <br>
+- Under Create OAuth client ID select "Other" <br>
+- Type a name in the name box such as "My Client" <br>
+- On the next screen where it says OAuth client, click OK. <br>
+- Under OAuth 2.0 client IDs, click the download arrow on the far right side <br>
+- Download the file <br>
+- In Windows Explorer rename the long name of client_secret_345342432362-kjkklkewjfqlkf to simply client_secret.json <br>
+- Under API & Services Click Dashboard <br>
+- Click Enable APIS and Services <br>
+- Search for YouTube Data API v3 and click on it <br>
+- Click the blue Enable box. <br>
+- If you have multiple google ID's it's important to keep an eye on the upper right to make sure it doesn't switch to another one while doing these steps<br>
 <br>
 2. Find Your LiveChatID<br>
-2a. Find the livechatid for the live stream chat using the Youtube API Console (Live stream must be created first) Each livestream chat has a unique id. You can get this id using the Youtube API Console. <br>
-2b. Make sure you are logged in to youtube with the channel owner's account.<br>
-2c. In API Explorer click youtube.liveBroadcasts.list<br>
-2d. In the "part" box put "snippet" In the broadcastStatus box<br>
-2e. Select Active (or Upcoming if it is still upcoming)<br>
-2f. Click Execute at the bottom<br>
-2g. Scroll down and find the value for liveChatId<br>
-2h. Copy this value to notepad temporarily <br>
+- a. Find the livechatid for the live stream chat using the Youtube API Console (Live stream must be created first) Each livestream chat has a unique id. You can get this id using the Youtube API Console. <br>
+- b. Make sure you are logged in to youtube with the channel owner's account.<br>
+- c. In API Explorer click youtube.liveBroadcasts.list<br>
+- d. In the "part" box put "snippet" In the broadcastStatus box<br>
+- e. Select Active (or Upcoming if it is still upcoming)<br>
+- f. Click Execute at the bottom<br>
+- g. Scroll down and find the value for liveChatId<br>
+- h. Copy this value to notepad temporarily <br>
 <br>
 3. install Microsoft .NET 4.6.1 if not installed<br>
 <br>

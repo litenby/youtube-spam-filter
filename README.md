@@ -19,14 +19,14 @@ Setup Instructions<br>
 1b. In google search for Youtube API Console Click the link called Youtube Data API Overview - Google Developers On the left click Get Auth Credentials. Where it says "Open the Credentials page" click that Click Create to create a project Accept the terms of service Name the project anything and then click create. Click Create credentials Select OAuth client ID Click configure consent screen Enter a product name, can be anything Leave other boxes blank Click Save at the bottom Under Create OAuth client ID select "Other" Type a name in the name box such as "My Client" On the next screen where it says OAuth client, click OK. Under OAuth 2.0 client IDs, click the download arrow on the far right side Download the file In Windows Explorer rename the long name of client_secret_345342432362-kjkklkewjfqlkf to simply client_secret.json Under API & Services Click Dashboard Click Enable APIS and Services Search for YouTube Data API v3 and click on it Click the blue Enable box. If you have multiple google ID's it's important to keep an eye on the upper right to make sure it doesn't switch to another one while doing these steps<br>
 <br>
 2. Find Your LiveChatID<br>
-2a. Find the livechatid for the live stream chat using the Youtube API Console (Live stream must be created first) Each livestream chat has a unique id. You can get this id using the Youtube API Console. 
-2b. Make sure you are logged in to youtube with the channel owner's account.
-2c. In API Explorer click youtube.liveBroadcasts.list
-2d. In the "part" box put "snippet" In the broadcastStatus box
-2e. Select Active (or Upcoming if it is still upcoming)
-2f. Click Execute at the bottom
-2g. Scroll down and find the value for liveChatId
-2h. Copy this value to notepad temporarily 
+2a. Find the livechatid for the live stream chat using the Youtube API Console (Live stream must be created first) Each livestream chat has a unique id. You can get this id using the Youtube API Console. <br>
+2b. Make sure you are logged in to youtube with the channel owner's account.<br>
+2c. In API Explorer click youtube.liveBroadcasts.list<br>
+2d. In the "part" box put "snippet" In the broadcastStatus box<br>
+2e. Select Active (or Upcoming if it is still upcoming)<br>
+2f. Click Execute at the bottom<br>
+2g. Scroll down and find the value for liveChatId<br>
+2h. Copy this value to notepad temporarily <br>
 <br>
 3. install Microsoft .NET 4.6.1 if not installed<br>
 <br>

@@ -14,6 +14,12 @@ namespace youtube_spam_filter
     {
 
         private SpamFilter bot;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -31,8 +37,8 @@ namespace youtube_spam_filter
 
             bot.Start();
 
-            button1.Enabled = false;
-            button2.Enabled = true;
+            button3.Enabled = false;
+            button5.Enabled = true;
         }
 
         private void Form1_Load_1(object sender, EventArgs e)

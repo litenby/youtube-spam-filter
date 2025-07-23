@@ -21,26 +21,33 @@ namespace youtube_spam_filter
         private YouTubeService ytService;
         private UserCredential credential;
         public Action<string> Log { get; set; }
+
         Timer Timer1;
         Timer Timer2;
         Timer Timer3;
+
         int firstConnect = 0;
-        String nextpagetoken = "";
         int stage = 0;
         int done = 1;
-        String[] recentMessages = new string[75];
-        int recentMsgIndex = 0;
-        DateTime askTime;
-        String msgToSend = "";
-        int startUpMsgHoldBack = 1;
-        String msgToDelete = "";
         int messagesDeletedCounter = 0;
-        String currentAnswer = "";
-        List<string> spamKeywords = new List<string>();
-        public AppConfig config;
+        int startUpMsgHoldBack = 1;
+        int recentMsgIndex = 0;
         int warmupDelay = 1;
+
+        String nextpagetoken = "";
+        String msgToSend = "";
+        String msgToDelete = "";
+        String[] recentMessages = new string[75];
+        String currentAnswer = "";
+
+        DateTime askTime;
+
+        List<string> spamKeywords = new List<string>();
+
+        public AppConfig config;
+
         private string ClientSecretsFile => Path.Combine(config.BasePath, "client_secrets.json");
-        private string SpamKeywordsFile => Path.Combine(config.BasePath, "spamkeywords.txt");
+        private string SpamKeywordsFile => Path.Combine(config.BasePath, "spam_keywords.txt");
 
         static void lineChanger(string newText, string fileName, int line_to_edit)
         {
@@ -142,10 +149,10 @@ namespace youtube_spam_filter
 
         public async void Start()
         {
+            Thread.Sleep(5000);
             Log?.Invoke("Loading configuration file.");
             LoadConfig();
-            Log?.Invoke("Loading spam keywords.");
-            LoadSpamKeywords();
+            Thread.Sleep(5000);
 
             using (var stream = new FileStream(ClientSecretsFile, FileMode.Open, FileAccess.Read))
             {
@@ -164,6 +171,8 @@ namespace youtube_spam_filter
                 ApplicationName = this.GetType().ToString()
 
             });
+            Log?.Invoke("Loading spam keywords.");
+            LoadSpamKeywords();
             Log?.Invoke("Starting spam filter timers.");
             Timer1 = new System.Threading.Timer(Timer1_Tick, null, 3000, 2000);        // Retrieves channel messages every 2 seconds.
             Timer3 = new System.Threading.Timer(Timer3_Tick, null, 15000, 15000);      // Asks trivia question, waits 15 seconds, gives hint, then gives answer.

@@ -185,27 +185,6 @@ namespace youtube_spam_filter
             if (warmupDelay == 0)
             {
                 Log?.Invoke("Sent Message: " + myMessage);
-                /*
-                UserCredential credential;
-                using (var stream = new FileStream(ClientSecretsFile, FileMode.Open, FileAccess.Read))
-                {
-                    credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                        GoogleClientSecrets.Load(stream).Secrets,
-                        new[] { YouTubeService.Scope.Youtube },
-                        "user",
-                        CancellationToken.None,
-                        new FileDataStore(this.GetType().ToString())
-                    );
-                }
-
-                
-
-                var youtubeService = new YouTubeService(new BaseClientService.Initializer()
-                {
-                    HttpClientInitializer = credential,
-                    ApplicationName = this.GetType().ToString()
-                });
-                */
 
                 firstConnect = 1;
                 LiveChatMessage comments = new LiveChatMessage();
@@ -227,28 +206,7 @@ namespace youtube_spam_filter
         public async Task getMsg(String curAnswer)
         {
             Console.WriteLine("Getting messages.");
-           /*
-            UserCredential credential;
 
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "client_secrets.json");
-          
-            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    new[] { YouTubeService.Scope.Youtube },
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(@"C:\spambot\tokenstore", true)
-                );
-            }
-
-            var ytService = new YouTubeService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = this.GetType().ToString()
-            });
-            */
             String liveChatId = config.LiveChatId;
             var chatMessages = ytService.LiveChatMessages.List(liveChatId, "id,snippet,authorDetails");
             chatMessages.PageToken = nextpagetoken;
@@ -271,7 +229,7 @@ namespace youtube_spam_filter
                 Log?.Invoke($"{DateTime.Now} msg time: {messageTime}  ago: {timeSince} " + displayMessage);
                 
 
-                if (displayName != "Michael Shaffer" && !recentMessages.Contains(messageId) && startUpMsgHoldBack == 0)
+                if (displayName != config.DisplayName && !recentMessages.Contains(messageId) && startUpMsgHoldBack == 0)
                 {
                     //Log?.Invoke($"recent message: {messageTime} Delay: {toSeconds}  {displayMessage}");
 
@@ -290,28 +248,6 @@ namespace youtube_spam_filter
         {
             messagesDeletedCounter++;
             
-            /*
-            UserCredential credential;
-
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "client_secrets.json");
-          
-            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    new[] { YouTubeService.Scope.Youtube },
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(@"C:\spambot\tokenstore", true)
-                );
-            }
-
-            var ytService = new YouTubeService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = this.GetType().ToString()
-            });
-            */
             await ytService.LiveChatMessages.Delete(mGetRidOf).ExecuteAsync();
             Log?.Invoke($"{DateTime.Now}  '{mBody}' deleted from channel. {messagesDeletedCounter} spam messages deleted.");
         }

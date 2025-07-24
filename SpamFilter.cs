@@ -73,6 +73,7 @@ namespace youtube_spam_filter
         void LoadSpamKeywords()
         {
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "spam_keywords.txt");
+            Log?.Invoke(filePath);
             if (File.Exists(filePath))
             {
                 spamKeywords = File.ReadAllLines(filePath)
@@ -118,6 +119,7 @@ namespace youtube_spam_filter
                 warmupDelay = 0;
                 Log?.Invoke("Messages now allowed to be sent to Youtube chat.");
                 Timer3.Change(Timeout.Infinite, Timeout.Infinite);
+                startUpMsgHoldBack = 0;
             }
             catch (AggregateException ex)
             {
@@ -149,10 +151,10 @@ namespace youtube_spam_filter
 
         public async void Start()
         {
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
             Log?.Invoke("Loading configuration file.");
             LoadConfig();
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
 
             using (var stream = new FileStream(ClientSecretsFile, FileMode.Open, FileAccess.Read))
             {
@@ -225,6 +227,7 @@ namespace youtube_spam_filter
         public async Task getMsg(String curAnswer)
         {
             Console.WriteLine("Getting messages.");
+           /*
             UserCredential credential;
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "client_secrets.json");
@@ -245,7 +248,7 @@ namespace youtube_spam_filter
                 HttpClientInitializer = credential,
                 ApplicationName = this.GetType().ToString()
             });
-
+            */
             String liveChatId = config.LiveChatId;
             var chatMessages = ytService.LiveChatMessages.List(liveChatId, "id,snippet,authorDetails");
             chatMessages.PageToken = nextpagetoken;
@@ -265,17 +268,19 @@ namespace youtube_spam_filter
                 TimeSpan timeSince = DateTime.UtcNow - messageTime;
                 int toSeconds = (int)timeSince.TotalSeconds;
 
-                Log?.Invoke($"{DateTime.Now}   msg time: {messageTime}  ago: {timeSince}");
+                Log?.Invoke($"{DateTime.Now} msg time: {messageTime}  ago: {timeSince} " + displayMessage);
+                
 
-                if (displayName != "Trivia Bot" && !recentMessages.Contains(messageId) && startUpMsgHoldBack == 0)
+                if (displayName != "Michael Shaffer" && !recentMessages.Contains(messageId) && startUpMsgHoldBack == 0)
                 {
-                    Log?.Invoke($"recent message: {messageTime} Delay: {toSeconds}  {displayMessage}");
+                    //Log?.Invoke($"recent message: {messageTime} Delay: {toSeconds}  {displayMessage}");
 
                     // Track seen messages
                     recentMessages[recentMsgIndex] = messageId;
                     recentMsgIndex = (recentMsgIndex + 1) % recentMessages.Length;
 
                     if (checkSpam(displayMessage))
+                        Log?.Invoke("Found spam, deleting message: " + displayMessage);
                         await deleteMsg(messageId, displayMessage);
                 }
             }
@@ -284,8 +289,8 @@ namespace youtube_spam_filter
         public async Task deleteMsg(String mGetRidOf, String mBody)
         {
             messagesDeletedCounter++;
-            Log?.Invoke($"{DateTime.Now}  '{mBody}' deleted from channel. {messagesDeletedCounter} spam messages deleted.");
-
+            
+            /*
             UserCredential credential;
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "client_secrets.json");
@@ -306,8 +311,9 @@ namespace youtube_spam_filter
                 HttpClientInitializer = credential,
                 ApplicationName = this.GetType().ToString()
             });
-
+            */
             await ytService.LiveChatMessages.Delete(mGetRidOf).ExecuteAsync();
+            Log?.Invoke($"{DateTime.Now}  '{mBody}' deleted from channel. {messagesDeletedCounter} spam messages deleted.");
         }
     }
 }

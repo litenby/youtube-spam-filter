@@ -151,11 +151,10 @@ namespace youtube_spam_filter
 
         public async void Start()
         {
-            Thread.Sleep(1000);
+            
             Log?.Invoke("Loading configuration file.");
             LoadConfig();
-            Thread.Sleep(1000);
-
+            
             using (var stream = new FileStream(ClientSecretsFile, FileMode.Open, FileAccess.Read))
             {
                 credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
@@ -176,8 +175,9 @@ namespace youtube_spam_filter
             Log?.Invoke("Loading spam keywords.");
             LoadSpamKeywords();
             Log?.Invoke("Starting spam filter timers.");
-            Timer1 = new System.Threading.Timer(Timer1_Tick, null, 3000, 2000);        // Retrieves channel messages every 2 seconds.
-            Timer3 = new System.Threading.Timer(Timer3_Tick, null, 15000, 15000);      // Asks trivia question, waits 15 seconds, gives hint, then gives answer.
+            int msgInterval = Convert.ToInt32(config.MessageRetrieveInterval);
+            Timer1 = new System.Threading.Timer(Timer1_Tick, null, 3000, msgInterval);        // Retrieves channel messages every msgInterval seconds.
+            Timer3 = new System.Threading.Timer(Timer3_Tick, null, 15000, 15000);             // Asks trivia question, waits 15 seconds, gives hint, then gives answer.
         }
 
         public async Task sendMsg(string myMessage)
@@ -225,20 +225,15 @@ namespace youtube_spam_filter
                 DateTime messageTime = chatMessage.Snippet.PublishedAt ?? DateTime.UtcNow;
                 TimeSpan timeSince = DateTime.UtcNow - messageTime;
                 int toSeconds = (int)timeSince.TotalSeconds;
-
-                Log?.Invoke($"{DateTime.Now} msg time: {messageTime}  ago: {timeSince} " + displayMessage);
-                
+                Log?.Invoke(messageTime + " " + displayMessage);
 
                 if (displayName != config.DisplayName && !recentMessages.Contains(messageId) && startUpMsgHoldBack == 0)
                 {
-                    //Log?.Invoke($"recent message: {messageTime} Delay: {toSeconds}  {displayMessage}");
-
                     // Track seen messages
                     recentMessages[recentMsgIndex] = messageId;
                     recentMsgIndex = (recentMsgIndex + 1) % recentMessages.Length;
 
                     if (checkSpam(displayMessage))
-                        Log?.Invoke("Found spam, deleting message: " + displayMessage);
                         await deleteMsg(messageId, displayMessage);
                 }
             }
